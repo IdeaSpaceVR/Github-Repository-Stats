@@ -1,0 +1,35 @@
+body canvas {
+    cursor: move;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+    cursor: grab;
+}
+
+body {
+    background-color: #000000;
+}
+
+.cover {
+		width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+.post-text-texture {
+    width: 2048px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: -2;
+		font-size: 34px;
+}
+
+.post-text-texture img {
+		width: 30px;
+}
+

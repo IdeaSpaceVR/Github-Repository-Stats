@@ -1,0 +1,179 @@
+@extends('theme::index')
+
+@section('title', $space_title)
+
+@section('scene')
+
+    <a-scene>
+
+
+        <a-assets>
+				@if (isset($content['posts']))
+						@foreach ($content['posts'] as $post)
+
+                @if (isset($post['post-image-0']))
+                    <img id="post-image-0-content-id-{{ $post['post-image-0']['#content-id'] }}" src="{{ $post['post-image-0']['#uri']['#value'] }}">
+                 @endif
+
+                @if (isset($post['post-image-1']))
+                    <img id="post-image-1-content-id-{{ $post['post-image-1']['#content-id'] }}" src="{{ $post['post-image-1']['#uri']['#value'] }}">
+                 @endif
+
+                @if (isset($post['post-image-2']))
+                    <img id="post-image-2-content-id-{{ $post['post-image-2']['#content-id'] }}" src="{{ $post['post-image-2']['#uri']['#value'] }}">
+                 @endif
+
+             @endforeach
+        @endif
+        </a-assets>
+
+  
+        <a-entity position="0 3 -1.5">
+				@if (isset($content['posts']))
+
+            @php 
+            $post_counter = 0;
+            $padding = 0.1;
+            @endphp
+
+						@foreach ($content['posts'] as $post)
+
+                <!-- POST //-->
+                <a-entity position="0 0 0" id="post-{{ $post_counter }}" class="posts" visible="false">
+
+                    @php
+										$post_image_height = 0;
+            				$post_height = 0;
+            				$image_background_color = (isset($post['post-image-background-color'])?$post['post-image-background-color']['#value']:'#000000');
+                    @endphp
+
+                    <!-- POST IMAGE 0 //-->
+                    @if (isset($post['post-image-0']))
+                        @php
+                        if ($post['post-image-0']['#width'] > $post['post-image-0']['#height']) { 
+                            $width = 4;
+                            $height = 2;
+                        } else if ($post['post-image-0']['#width'] < $post['post-image-0']['#height']) {
+                            $width = 2;
+                            $height = 4;
+                        } else {
+                            $width = 4;
+                            $height = 4;
+                        }
+                        //$post_image_height = ($height / 2);
+                        $post_image_height = $height;
+												$post_height = $post_height + $height;
+                        @endphp
+                        <a-rounded position="0 0 0" width="4" height="{{ $height }}" color="{{ $image_background_color }}" top-left-radius="0.1" top-right-radius="0.1" bottom-left-radius="0" bottom-right-radius="0">
+                        @if ($post['post-image-0']['#mime-type'] == 'image/gif') 
+                            <a-image position="0 0 0.001" src="#post-image-0-content-id-{{ $post['post-image-0']['#content-id'] }}" width="{{ $width - ($padding * 2) }}" height="{{ $height - ($padding * 2) }}" shader="gif"></a-image>
+                        @else
+                            <a-image position="0 0 0.001" src="#post-image-0-content-id-{{ $post['post-image-0']['#content-id'] }}" width="{{ $width - ($padding * 2) }}" height="{{ $height - ($padding * 2) }}"></a-image>
+                        @endif
+                        </a-rounded>
+                    @endif
+
+                    <!-- POST IMAGE 1 //-->
+                    @if (isset($post['post-image-1']))
+                        @php
+                        if ($post['post-image-1']['#width'] > $post['post-image-1']['#height']) { 
+                            $width = 4;
+                            $height = 2;
+                        } else if ($post['post-image-1']['#width'] < $post['post-image-1']['#height']) {
+                            $width = 2;
+                            $height = 4;
+                        } else {
+                            $width = 4;
+                            $height = 4;
+                        }
+                        $post_image_height = (!isset($post_image_height)?0:$post_image_height) + $height; //+ $padding;
+												$post_height = $post_height + $height;
+                        @endphp
+                        <a-rounded position="0 -{{ $post_image_height - ($height / 2) }} 0" width="4" height="{{ $height }}" color="{{ $image_background_color }}" @if (!isset($post['post-image-0'])) top-left-radius="0.1" top-right-radius="0.1" @else top-left-radius="0" top-right-radius="0" @endif bottom-left-radius="0" bottom-right-radius="0">
+                        @if ($post['post-image-1']['#mime-type'] == 'image/gif') 
+                            <a-image position="0 0 0.001" src="#post-image-1-content-id-{{ $post['post-image-1']['#content-id'] }}" width="{{ $width - ($padding * 2) }}" height="{{ $height - ($padding * 2) }}" shader="gif"></a-image>
+                        @else
+                            <a-image position="0 0 0.001" src="#post-image-1-content-id-{{ $post['post-image-1']['#content-id'] }}" width="{{ $width - ($padding * 2) }}" height="{{ $height - ($padding * 2) }}"></a-image>
+                        @endif
+                        </a-rounded>
+                    @endif
+
+                    <!-- POST IMAGE 2 //-->
+                    @if (isset($post['post-image-2']))
+                        @php
+                        if ($post['post-image-2']['#width'] > $post['post-image-2']['#height']) { 
+                            $width = 4;
+                            $height = 2;
+                        } else if ($post['post-image-2']['#width'] < $post['post-image-2']['#height']) {
+                            $width = 2;
+                            $height = 4;
+                        } else {
+                            $width = 4;
+                            $height = 4;
+                        }
+                        $post_image_height = (!isset($post_image_height)?0:$post_image_height) + $height; //+ $padding;
+												$post_height = $post_height + $height;
+                        @endphp
+                        <a-rounded position="0 -{{ $post_image_height - ($height / 2) }} 0" width="4" height="{{ $height }}" color="{{ $image_background_color }}" @if (!isset($post['post-image-0']) && !isset($post['post-image-1'])) top-left-radius="0.1" top-right-radius="0.1" @else top-left-radius="0" top-right-radius="0" @endif bottom-left-radius="0" bottom-right-radius="0">
+                        @if ($post['post-image-2']['#mime-type'] == 'image/gif') 
+                            <a-image position="0 0 0.001" src="#post-image-2-content-id-{{ $post['post-image-2']['#content-id'] }}" width="{{ $width - ($padding * 2) }}" height="{{ $height - ($padding * 2) }}" shader="gif"></a-image>
+                        @else
+                            <a-image position="0 0 0.001" src="#post-image-2-content-id-{{ $post['post-image-2']['#content-id'] }}" width="{{ $width - ($padding * 2) }}" height="{{ $height - ($padding * 2) }}"></a-image>
+                        @endif
+                        </a-rounded>
+                    @endif
+
+                    <!-- POST TEXT //-->
+                    @if (isset($post['post-text']) && trim($post['post-text']['#value']) != '')
+                        @php
+												$post_image_height = (!isset($post_image_height)?0:$post_image_height); 
+                        @endphp
+                        <a-entity
+														isvr-post-text="target_content_id: {{ $post['post-text']['#content-id'] }}; post_image_height: {{ $post_image_height }}; post_height: {{ $post_height }}; post_counter: {{ $post_counter }}" 
+														position="0 0 0"
+														visible="false"
+														geometry="primitive: plane; width: 4; height: 1"
+														material="color: #FFFFFF">
+														<a-plane
+																id="plane-post-text-content-id-{{ $post['post-text']['#content-id'] }}"
+																position="0 0 0.001"
+																material="shader: html; target: #post-text-content-id-{{ $post['post-text']['#content-id'] }}; transparent: false; ratio: width; side:double"
+																width="3.8">
+														</a-plane>
+                        </a-entity>
+                    @endif
+
+                </a-entity>
+								<!-- POST END //-->
+
+								@php
+								$post_counter++;
+								@endphp
+
+						@endforeach
+
+				@endif
+        </a-entity>
+
+			
+				<a-entity isvr-post-position>
+				</a-entity>
+
+
+    </a-scene>
+
+
+    <div class="cover">
+    </div>
+
+    @if (isset($content['posts']))
+        @foreach ($content['posts'] as $post)
+            @if (isset($post['post-text']))
+                <div id="post-text-content-id-{{ $post['post-text']['#content-id'] }}" class="post-text-texture" style="background-color:#FFFFFF">
+                {!! $post['post-text']['#value'] !!}
+                </div>
+            @endif
+        @endforeach
+    @endif
+
+@endsection
