@@ -1,1 +1,1 @@
-# IdeaSpace 360 Video Gallery theme
+# Github Repository Stats theme
