@@ -43,17 +43,6 @@ var isvr_repo = {
 		},
 
 
-		getWeekDayName: function (utc_weekday) {
-				switch (utc_month) {
-						case 0:
-								return 'January';
-								break;
-						case 1:
-
-				}
-		},
-
-
     init: function (repo_owner_name, repo_name) {
 
 				this.sceneEl = document.querySelector('a-scene');
@@ -75,12 +64,38 @@ var isvr_repo = {
 
             for (var i=0; i<weekly_commits.length; i++) {
 
-								var date = new Date(weekly_commits[i].week * 1000);
-console.log(this.getMonthName(date.getUTCMonth()));
+								//var date = new Date(weekly_commits[i].week * 1000);
+//console.log(this.getMonthName(date.getUTCMonth()));
 
 
-								weekly_commits[i].days;
 
+								var weekdays = weekly_commits[i].days;
+
+								for (var j=0; j<weekdays.length; j++) {
+
+										if (weekdays[j]	== 0) {
+
+												var entity = document.createElement('a-entity');
+      									entity.setAttribute('mixin', 'no-commit');
+      									entity.setAttribute('position', { x: , y: , z: });
+      									this.el.appendChild(entity);
+
+										} else {
+
+												var k = 0;
+												while (k < weekdays[j]) {
+
+														var entity = document.createElement('a-entity');
+      											entity.setAttribute('mixin', 'commit');
+      											entity.setAttribute('position', { x: , y: , z: });
+      											this.el.appendChild(entity);
+														k++;
+
+												} /* while */
+
+										} /* if */
+
+								} /* for */
 
             } /* for */
 
